@@ -1,4 +1,5 @@
 #pragma once
+#include <pebble.h>
 
 /*
     pebble-unicode provides functions for handling Unicode on Pebble
