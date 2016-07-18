@@ -1,0 +1,33 @@
+{
+  "name": "pebble_unicode",
+  "author": {
+    "name": "Ben Caller",
+    "email": "bcaller@gmail.com"
+  },
+  "description": "Functions for using Unicode characters with Pebble",
+  "version": "1.0.0",
+  "files": ["dist.zip"],
+  "keywords": ["pebble-package"],
+  "dependencies": {},
+  "license": "GPL",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bcaller/pebble_unicode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bcaller/pebble_unicode/issues"
+  },
+  "homepage": "https://github.com/bcaller/pebble_unicode#readme",
+  "pebble": {
+    "projectType": "package",
+    "sdkVersion": "3",
+    "targetPlatforms": [
+      "aplite",
+      "basalt",
+      "chalk"
+    ],
+    "resources": {
+      "media": []
+    }
+  }
+}
