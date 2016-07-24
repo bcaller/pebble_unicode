@@ -18,28 +18,19 @@
 
 #include <buffer_size.h>
 
-// Correct snprintf size for strings which may contain unicode
-size_t unicode_buffer_size(const char * s, size_t width) {
-	size_t counter = 0;
-	size_t updated_counter = 0;
-	for(; *s && *s != '\0' && updated_counter < width; s++) {
-		counter = updated_counter;
-		if((*s & 0xc0) == 0xc0) {
-			// New multi-byte Unicode character
-			updated_counter++;
-			char x = *s; // Make copy of *s
-			for(int i=6; i>0 && (((x >> i) & 1) == 1); i--) {
-				// Each extra byte
-				updated_counter++;
-				s++;
-			}
-		} else {
-			// ASCII
-			updated_counter++;
-		}
-	}
-	// Append null character
-	if(updated_counter < width)
-	    return updated_counter + 1;
-	return counter + 1;
+// Correct snprintf size for strings which may contain multi-byte utf-8 characters
+// We must never replace a continuation byte with \0 when shortening a string
+size_t unicode_buffer_size(const char * s, size_t n) {
+	if(n == 0) return 0;
+	
+	do {
+		n--; // Zero-index of last char (char to be replaced by \0)
+	} while(
+		n  // String will be just '\0' if width+1 is 1
+		&& s[n]  // If last char is already '\0' 
+		&& (s[n] & 0xc0) == 0x80  // UTF-8 continuation byte (cannot be replaced by \0)
+	);
+	
+	// Last byte is not a utf-8 continuation byte, so it can be safely replaced by \0
+	return n + 1;
 }

@@ -21,10 +21,10 @@
 
 /*
 	Correct snprintf size for strings which may contain unicode.
-	Prevents partial copying of a multi-byte character.
+	Avoids splitting a multi-byte utf-8 character.
 	Usage:
 	snprintf(dest,
 		unicode_buffer_size(t_name->value->cstring, sizeof(dest)),
 		PRINT_FORMAT, t_name->value->cstring);
 */
-size_t unicode_buffer_size(const char * s, size_t width);
+size_t unicode_buffer_size(const char * s, size_t n);
